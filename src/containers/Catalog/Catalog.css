@@ -1,0 +1,30 @@
+.main-catalog {
+    max-width: 1130px;
+    width: 1130px;
+    margin: 20px;
+}
+.catalog {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    gap: 30px;
+    max-width: 100%;
+}
+
+@media only screen and (max-width: 1170px) {
+    .catalog {
+        gap: 20px;
+    }
+}
+
+@media only screen and (max-width: 920px) {
+    .catalog {
+        gap: 16px;
+    }
+}
+
+@media only screen and (max-width: 480px) {
+    .catalog {
+        gap: 10px;
+    }
+}
