@@ -98,7 +98,7 @@ const HomeLoan = () => {
                                            value={propertyValue}
                                            onChange={(e) => setPropertyValue(e.target.value)} />
                                     <div className={'input-label'}>
-                                        <img src={nis} className={'label-img'}/>
+                                        <img src={nis} className={'label-img'} alt=""/>
                                     </div>
                                 </div>
                                 {errors.propertyValue &&
@@ -137,7 +137,7 @@ const HomeLoan = () => {
                                            value={downPayment}
                                            onChange={(e) => setDownPayment(e.target.value)} />
                                     <div className={'input-label'}>
-                                        <img src={nis} className={'label-img'}/>
+                                        <img src={nis} className={'label-img'} alt=""/>
                                     </div>
                                     <Slider
                                         {...sliderStyles}
@@ -185,7 +185,7 @@ const HomeLoan = () => {
                                            value={deadline}
                                            onChange={(e) => setDeadline(e.target.value)} />
                                     <div className={'input-label'}>
-                                        <img src={nis} className={'label-img'}/>
+                                        <img src={nis} className={'label-img'} alt=""/>
                                     </div>
                                     <Slider
                                         {...sliderStyles}
@@ -210,7 +210,7 @@ const HomeLoan = () => {
                                            value={monthlyPayment}
                                            onChange={(e) => setMonthlyPayment(e.target.value)} />
                                     <div className={'input-label'}>
-                                        <img src={nis} className={'label-img'}/>
+                                        <img src={nis} className={'label-img'} alt=""/>
                                     </div>
                                     <Slider
                                         {...sliderStyles}
