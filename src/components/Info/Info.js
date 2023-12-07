@@ -7,7 +7,7 @@ const Info = (props) => {
 
     return (
         <div className={'input-info'}>
-            <img src={info}/>
+            <img src={info} alt=""/>
             <p>{text}</p>
         </div>
     )

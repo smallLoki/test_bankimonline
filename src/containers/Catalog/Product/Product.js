@@ -12,7 +12,7 @@ const Product = (props) => {
         <div className={'product'}>
             <div className={'product-img-block'}>
                 <span className={'product-like'}></span>
-                <img src={product.thumbnail ?? logo} className={'product-img'}/>
+                <img src={product.thumbnail ?? logo} className={'product-img'} alt=""/>
             </div>
             <div className={'info-block'}>
                 <div className={'cost'}>
@@ -23,7 +23,7 @@ const Product = (props) => {
                 </div>
                 <div className={'product-details'}>
                     <div className={'product-rating'}>
-                        <img src={star} className={'rating-star'}/>&nbsp;{product.rating}
+                        <img src={star} className={'rating-star'} alt=""/>&nbsp;{product.rating}
                     </div>
                     <div className={'product-reviews'}>
                         {product.stock} {productText["STOCK_UNITS"]}

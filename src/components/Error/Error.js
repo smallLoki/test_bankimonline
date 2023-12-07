@@ -7,7 +7,7 @@ const Error = (props) => {
 
     return (
         <div className={'input-error'}>
-            <img src={info}/>
+            <img src={info} alt=""/>
             <p>{text}</p>
         </div>
     )

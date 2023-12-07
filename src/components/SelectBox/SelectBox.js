@@ -12,7 +12,7 @@ const CustomSelectOption = (props) => {
         <Option {...props}>
             <div className={'option-block'}>
                 <div> {label} </div>
-                {props.isSelected && <img src={check}/>}
+                {props.isSelected && <img src={check} alt=""/>}
             </div>
         </Option>
     );
