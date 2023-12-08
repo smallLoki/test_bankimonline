@@ -1,0 +1,10 @@
+.form-label {
+    width: 325px;
+}
+
+@media only screen and (max-width: 860px) {
+    .form-label {
+        min-width: 350px;
+        width: 100%;
+    }
+}

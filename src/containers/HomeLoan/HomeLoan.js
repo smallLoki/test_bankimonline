@@ -1,12 +1,11 @@
 import React, { Fragment, useState } from 'react';
 import { useLingui } from "@lingui/react";
-import Slider from 'rc-slider';
 import 'rc-slider/assets/index.css';
 import "./HomeLoan.css";
-import SelectBox from "../../components/SelectBox/SelectBox";
-import Info from "../../components/Info/Info";
-import Error from "../../components/Error/Error";
-import nis from '../../assets/images/currencies/nis.svg';
+import { cityOptions, planOptions, typeOptions, propertyOptions } from '../../Data/HomeLoanData'
+import SelectBlock from "./FormBlock/SelectBlock/SelectBlock";
+import InputSliderBlock from "./FormBlock/InputSliderBlock/InputSliderBlock";
+import InputBlock from "./FormBlock/InputBlock/InputBlock";
 
 
 
@@ -31,45 +30,6 @@ const HomeLoan = () => {
         monthlyPayment: false,
     });
 
-    const cityOptions = [
-        { value: 'Тель-авив', label: 'Тель-авив' },
-        { value: 'Акко', label: 'Акко' },
-        { value: 'Ариэль', label: 'Ариэль' },
-    ];
-
-    const planOptions = [
-        { value: '1', label: 'В ближайший месяц' },
-        { value: '2', label: 'В ближайшие 2 месяц' },
-        { value: '3', label: 'В ближайшие 3 месяца' },
-        { value: '6', label: 'В ближайшие 6 месяцев' },
-    ];
-
-    const typeOptions = [
-        { value: '1', label: 'Квартира от застройщика' },
-        { value: '2', label: 'Квартира на вторичном рынке' },
-        { value: '3', label: 'Частный дом' },
-        { value: '4', label: 'Земельный участок / Строительство' },
-        { value: '5', label: 'Коммерческая недвижимость' },
-    ];
-
-    const propertyOptions = [
-        { value: '1', label: 'Нет, я пока не владею недвижимостью' },
-        { value: '2', label: 'Да, у меня уже есть недвижимость в собственности' },
-        { value: '3', label: 'Я собираюсь продать единственную недвижимость в ближайшие два года, чтобы использовать полученный капитал для приобретения новой' },
-    ];
-
-    const sliderStyles = {
-        style:{height: 2, padding: 0},
-        trackStyle: { backgroundColor: "#FBE54D", height: 2 },
-        railStyle: { backgroundColor: "#333535", height: 2 },
-        handleStyle: {
-            border: "transparent",
-            height: 12,
-            width: 12,
-            backgroundColor: "#FBE54D"
-        },
-    }
-
     const sendResult = () => {
         setErrors({
             propertyValue: (propertyValue <= 0),
@@ -91,144 +51,84 @@ const HomeLoan = () => {
                     <h1>{homeLoanText["TITLE"]}</h1>
                     <div className={'form-block'}>
                         <div className={'form-input-block'}>
-                            <div className={'form-label'}>
-                                <label>{homeLoanText["PROPERTY_VALUE"]}</label>
-                                <div className={'input-label-block'}>
-                                    <input className={`input-with-label ${errors.propertyValue && 'error'}`} type="number"
-                                           value={propertyValue}
-                                           onChange={(e) => setPropertyValue(e.target.value)} />
-                                    <div className={'input-label'}>
-                                        <img src={nis} className={'label-img'} alt=""/>
-                                    </div>
-                                </div>
-                                {errors.propertyValue &&
-                                    <Error text={homeLoanText["PAYMENT_DESCRIPTION"]}/>}
-                            </div>
-                            <div className={'form-label'}>
-                                <label>{homeLoanText["CITY"]}</label>
-                                <SelectBox
-                                    error={errors.city}
-                                    onChangeValue={(e) => setCity(e)}
-                                    placeholder={homeLoanText["SELECT_CITY"]}
-                                    options={cityOptions}
-                                />
-                                {errors.city &&
-                                    <Error text={homeLoanText["SELECT_ERROR"]}/>}
-                            </div>
-                            <div className={'form-label'}>
-                                <label>{homeLoanText["HOME_LOAN_PLAN"]}</label>
-                                <SelectBox
-                                    error={errors.plan}
-                                    onChangeValue={(e) => setPlan(e)}
-                                    placeholder={homeLoanText["SELECT_PLAN"]}
-                                    options={planOptions}
-                                />
-                                {errors.plan &&
-                                    <Error text={homeLoanText["SELECT_ERROR"]}/>}
-                            </div>
+                            <InputBlock
+                                label={"PROPERTY_VALUE"}
+                                error={errors.propertyValue}
+                                errorText={"PAYMENT_DESCRIPTION"}
+                                value={propertyValue}
+                                setValue={(e) => setPropertyValue(e)}
+                            />
+                            <SelectBlock
+                                label={"CITY"}
+                                placeholder={"SELECT_CITY"}
+                                error={errors.city}
+                                errorText={"SELECT_ERROR"}
+                                setData={(e) => setCity(e)}
+                                options={cityOptions}
+                            />
+                            <SelectBlock
+                                label={"HOME_LOAN_PLAN"}
+                                placeholder={"SELECT_PLAN"}
+                                error={errors.plan}
+                                errorText={"SELECT_ERROR"}
+                                setData={(e) => setPlan(e)}
+                                options={planOptions}
+                            />
                         </div>
                     </div>
                     <div className={'form-block'}>
                         <div className={'form-input-block'}>
-                            <div className={'form-label'}>
-                                <label>{homeLoanText["DOWN_PAYMENT"]}</label>
-                                <div className={'input-label-block'}>
-                                    <input className={`input-with-range ${errors.downPayment && 'error'}`} type="number"
-                                           value={downPayment}
-                                           onChange={(e) => setDownPayment(e.target.value)} />
-                                    <div className={'input-label'}>
-                                        <img src={nis} className={'label-img'} alt=""/>
-                                    </div>
-                                    <Slider
-                                        {...sliderStyles}
-                                        min={1}
-                                        max={1000000}
-                                        defaultValue={downPayment}
-                                        value={downPayment}
-                                        onChange={(e) => setDownPayment(e)}
-                                    />
-                                </div>
-                                <Info text={homeLoanText["PAYMENT_DESCRIPTION"]}/>
-                                {errors.downPayment &&
-                                    <Error text={homeLoanText["DOWN_PAYMENT_ERROR"]}/>}
-                            </div>
-                            <div className={'form-label'}>
-                                <label>{homeLoanText["TYPE"]}</label>
-                                <SelectBox
-                                    error={errors.type}
-                                    onChangeValue={(e) => setType(e)}
-                                    placeholder={homeLoanText["SELECT_TYPE"]}
-                                    options={typeOptions}
-                                />
-                                {errors.type &&
-                                    <Error text={homeLoanText["SELECT_ERROR"]}/>}
-                            </div>
-                            <div className={'form-label'}>
-                                <label>{homeLoanText["HAVE_PROPERTY"]}</label>
-                                <SelectBox
-                                    error={errors.property}
-                                    onChangeValue={(e) => setProperty(e)}
-                                    placeholder={homeLoanText["SELECT_ANSWER"]}
-                                    options={propertyOptions}
-                                />
-                                {errors.property &&
-                                    <Error text={homeLoanText["SELECT_ERROR"]}/>}
-                            </div>
+                            <InputSliderBlock
+                                label={"DOWN_PAYMENT"}
+                                info={"PAYMENT_DESCRIPTION"}
+                                error={errors.downPayment}
+                                errorText={"DOWN_PAYMENT_ERROR"}
+                                min={1}
+                                max={1000000}
+                                value={downPayment}
+                                setValue={(e) => setDownPayment(e)}
+                            />
+                            <SelectBlock
+                                label={"TYPE"}
+                                placeholder={"SELECT_TYPE"}
+                                error={errors.type}
+                                errorText={"SELECT_ERROR"}
+                                setData={(e) => setType(e)}
+                                options={typeOptions}
+                            />
+                            <SelectBlock
+                                label={"HAVE_PROPERTY"}
+                                placeholder={"SELECT_ANSWER"}
+                                error={errors.property}
+                                errorText={"SELECT_ERROR"}
+                                setData={(e) => setProperty(e)}
+                                options={propertyOptions}
+                            />
                         </div>
                     </div>
                     <div className={'form-block top-line'}>
                         <div className={'form-input-block'}>
-                            <div className={'form-label'}>
-                                <label>{homeLoanText["DEADLINE"]}</label>
-                                <div className={'input-label-block'}>
-                                    <input className={`input-with-range ${errors.deadline && 'error'}`} type="number"
-                                           value={deadline}
-                                           onChange={(e) => setDeadline(e.target.value)} />
-                                    <div className={'input-label'}>
-                                        <img src={nis} className={'label-img'} alt=""/>
-                                    </div>
-                                    <Slider
-                                        {...sliderStyles}
-                                        min={4}
-                                        max={30}
-                                        defaultValue={deadline}
-                                        value={deadline}
-                                        onChange={(e) => setDeadline(e)}
-                                    />
-                                </div>
-                                <div className={'min-max-slider-block'}>
-                                    <span>4 года</span>
-                                    <span>30 лет</span>
-                                </div>
-                                {errors.deadline &&
-                                    <Error text={homeLoanText["DEADLINE_ERROR"]}/>}
-                            </div>
-                            <div className={'form-label'}>
-                                <label>{homeLoanText["MONTHLY_PAYMENT"]}</label>
-                                <div className={'input-label-block'}>
-                                    <input className={`input-with-range ${errors.monthlyPayment && 'error'}`} type="number"
-                                           value={monthlyPayment}
-                                           onChange={(e) => setMonthlyPayment(e.target.value)} />
-                                    <div className={'input-label'}>
-                                        <img src={nis} className={'label-img'} alt=""/>
-                                    </div>
-                                    <Slider
-                                        {...sliderStyles}
-                                        min={2654}
-                                        max={51130}
-                                        defaultValue={monthlyPayment}
-                                        value={monthlyPayment}
-                                        onChange={(e) => setMonthlyPayment(e)}
-                                    />
-                                </div>
-                                <div className={'min-max-slider-block'}>
-                                    <span>2,654 ₪</span>
-                                    <span>51,130 ₪</span>
-                                </div>
-                                <Info text={homeLoanText["ADVICE_MONTHLY_PAYMENT"]}/>
-                                {errors.monthlyPayment &&
-                                    <Error text={homeLoanText["PAYMENT_AMOUNT_ERROR"]}/>}
-                            </div>
+                            <InputSliderBlock
+                                label={"DEADLINE"}
+                                error={errors.deadline}
+                                errorText={"DEADLINE_ERROR"}
+                                min={4}
+                                max={30}
+                                minMaxLabels={{min: "4 года", max: "30 лет"}}
+                                value={deadline}
+                                setValue={(e) => setDeadline(e)}
+                            />
+                            <InputSliderBlock
+                                label={"MONTHLY_PAYMENT"}
+                                info={"ADVICE_MONTHLY_PAYMENT"}
+                                error={errors.monthlyPayment}
+                                errorText={"PAYMENT_AMOUNT_ERROR"}
+                                min={2654}
+                                max={51130}
+                                minMaxLabels={{min: "2,654 ₪", max: "51,130 ₪"}}
+                                value={monthlyPayment}
+                                setValue={(e) => setMonthlyPayment(e)}
+                            />
                         </div>
                     </div>
                 </div>
@@ -240,7 +140,6 @@ const HomeLoan = () => {
                     </button>
                 </div>
             </div>
-
         </Fragment>
     )
 }
